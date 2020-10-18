@@ -4,7 +4,7 @@ import sys
 import copy
  #shift matrix
 
-k =4 #number of clusters
+number_of_clusters =4 #number of clusters
 n =1011
 m =7
 A= 41
@@ -29,7 +29,7 @@ def pop_clusters(x):
       for i in range(x,len(eds)):
             min_sim = sys.maxsize
             c =0
-            for j in range(k):
+            for j in range(number_of_clusters):
                   if i>j:
                         sim = cal_sim(i,j)
                   else:
@@ -46,7 +46,7 @@ def pop_clusters(x):
 
 def cal_centroids():
       global Cent_t
-      for  p in range(k):
+      for  p in range(number_of_clusters):
             for j in range (A):
                   for l in range (m):
                         Cent_t[p][j][l] = 0
@@ -59,21 +59,21 @@ def third_party():
       global C,B, Cent_t,s,udm
       flag =0
       Cent = []
-      for i in range(k):
-            C.append([eds[k]])
+      for i in range(number_of_clusters):
+            C.append([eds[number_of_clusters]])
             B.append([i])
-            Cent.append(eds[k])
+            Cent.append(eds[number_of_clusters])
       for o in range(len(C)):
             Cent_t.append([[0 for c1 in range(len(C[0][0][0]))] for c2 in range(len(C[0][0]))])          
-      pop_clusters(k)
+      pop_clusters(number_of_clusters)
       cal_centroids()
-      for w in range(k):
+      for w in range(number_of_clusters):
             sm.append([[0 for z in range(m)] for x in range(A)])
       print("sm created")
       count =0
       while(flag==0 and count<10):
             count +=1
-            for z in range(k):
+            for z in range(number_of_clusters):
                   for x in range(A):
                         for v in range(m):
                               sm[z][x][v] = float(Cent_t[z][x][v]) - float(Cent[z][x][v])                                    
@@ -101,14 +101,6 @@ def third_party():
             print(Cent_t[0][0])
             if Cent == Cent_t:
                   flag=1
-            #for z in range(k):
-                  #for x in range(A):
-                        #for v in range(m):
-                              #if abs(float(Cent_t[z][x][v]) - float(Cent[z][x][v]))>10:
-                                    #flag=0
-                                    #break
-                              #else:
-                                    #flag =1
       with open('clusters.pkl', 'wb') as f:
             pickle.dump(B, f)
             
